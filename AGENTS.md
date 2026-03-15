@@ -100,6 +100,13 @@ Only these two conversion destinations are approved for user-facing CTA links un
 - Join the community on Skool:
   `https://www.skool.com/the-athlete-skills-institute-4906/`
 
+## Required CTA source of truth
+
+All user-facing CTA destinations must be centralized in:
+- `/src/config/cta.js`
+
+Frontend code must reuse the CTA URLs from `/src/config/cta.js` and must not hardcode conversion URLs directly in page files unless explicitly instructed otherwise.
+
 ## CTA routing rules
 
 All user-facing CTA links must resolve logically to one of the two approved conversion destinations above.
@@ -136,24 +143,24 @@ Use the Skool community URL for CTAs related to:
 - Never invent a third CTA destination unless explicitly instructed
 - Never use placeholder `#` links for real CTA buttons unless explicitly instructed
 - Never leave CTA destinations inconsistent across supported languages
-- Prefer reusing centralized CTA constants when applicable
+- Never hardcode approved conversion URLs directly in page markup if `/src/config/cta.js` can be used
+- Always use `/src/config/cta.js` as the source of truth for conversion links
 - If an existing CTA does not clearly match one of the two approved destinations, choose the closest logical approved destination based on intent
 - If the intended CTA purpose is genuinely ambiguous, report the ambiguity instead of inventing a new URL
 - Keep CTA behavior consistent across all repeated sections, cards, nav areas, and footers unless explicitly instructed otherwise
 
 ## Preferred CTA model
 
-When possible, centralize conversion URLs in code so frontend components reference a single source of truth.
+Use intention-based CTA mapping from `/src/config/cta.js`.
 
 Preferred logical mapping:
-- meeting CTAs -> booking URL
-- join/apply/explore/start/free-course CTAs -> Skool URL
+- meeting CTAs -> founding team booking URL
+- join/apply/explore/start/free-course CTAs -> Skool community URL
 
-If a central config file exists or is created, keep the naming explicit and intention-based.
-
-Example naming:
-- `FOUNDING_TEAM_BOOKING_URL`
-- `SKOOL_COMMUNITY_URL`
+Preferred names:
+- `CTA_URLS`
+- `CTA_TYPES`
+- `getCtaUrl(type)`
 
 ## Implementation scope
 
@@ -163,7 +170,8 @@ When working on UI tasks:
 - do not modify unrelated components
 - keep edits tightly scoped to the requested section
 - for frontend changes, always update all supported languages in the same task unless explicitly instructed otherwise
-- for CTA changes, always map links to the approved conversion destinations defined in this file unless explicitly instructed otherwise
+- for CTA changes, always map links to the approved conversion destinations defined in this file
+- always reuse `/src/config/cta.js` for user-facing CTA destinations when possible
 
 ## Rules for missing images
 
@@ -184,4 +192,5 @@ Always report:
 - confirmation that all supported languages were kept in sync
 - which CTA destinations were used
 - confirmation that all user-facing CTAs were mapped only to the approved conversion destinations
+- confirmation that `/src/config/cta.js` was used as the CTA source of truth when applicable
 - any intentional language-specific differences, only if explicitly requested by the user
