@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Wininlife – Färdigheter för livet, gratis och i tid</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <meta name="description" content="Wininlife är en stiftelsefinansierad utbildningsplattform som ger unga tillgång till livsviktiga färdigheter helt kostnadsfritt – alltid.">
   <style>
     :root {
@@ -51,8 +52,17 @@
     }
 
     .brand {
-      font-weight: 700;
-      letter-spacing: 0.2px;
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      max-width: min(340px, 64vw);
+    }
+
+    .brand img {
+      width: 100%;
+      max-height: 52px;
+      object-fit: contain;
+      display: block;
     }
 
     .nav-links {
@@ -60,6 +70,40 @@
       gap: 16px;
       flex-wrap: wrap;
       align-items: center;
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      cursor: pointer;
+      gap: 6px;
+    }
+
+    .menu-toggle span {
+      width: 20px;
+      height: 2px;
+      background: var(--ink);
+      border-radius: 3px;
+      transition: 0.2s ease;
+    }
+
+    .menu-toggle[aria-expanded="true"] span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    .menu-toggle[aria-expanded="true"] span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle[aria-expanded="true"] span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
     }
 
     .nav-links a {
@@ -206,13 +250,52 @@
 
       .hero { padding-top: 48px; }
     }
+
+    @media (max-width: 760px) {
+      .menu-toggle {
+        display: inline-flex;
+      }
+
+      .nav {
+        padding: 10px 0;
+      }
+
+      .brand {
+        max-width: min(250px, 66vw);
+      }
+
+      .nav-links {
+        position: absolute;
+        top: calc(100% + 1px);
+        left: 0;
+        right: 0;
+        padding: 14px 4vw 18px;
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
     <div class="container nav">
-      <div class="brand">Wininlife Foundation</div>
-      <nav class="nav-links" aria-label="Huvudmeny">
+      <a href="#" class="brand" aria-label="Wininlife Foundation hem">
+        <img src="assets/logo-full.svg" alt="Wininlife Foundation">
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mainMenu" aria-label="Öppna meny">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav class="nav-links" id="mainMenu" aria-label="Huvudmeny">
         <a href="#varfor">Varför vi finns</a>
         <a href="#finansiering">Finansiering</a>
         <a href="#mission">Mission</a>
@@ -336,5 +419,27 @@
       Wininlife Foundation – Färdigheter för livet, gratis och i tid.
     </div>
   </footer>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const mainMenu = document.getElementById('mainMenu');
+
+    menuToggle.addEventListener('click', () => {
+      const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+      menuToggle.setAttribute('aria-expanded', String(!isOpen));
+      menuToggle.setAttribute('aria-label', isOpen ? 'Öppna meny' : 'Stäng meny');
+      mainMenu.classList.toggle('open');
+    });
+
+    mainMenu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 760) {
+          menuToggle.setAttribute('aria-expanded', 'false');
+          menuToggle.setAttribute('aria-label', 'Öppna meny');
+          mainMenu.classList.remove('open');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
