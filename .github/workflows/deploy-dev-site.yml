@@ -41,6 +41,21 @@ jobs:
         run: |
           rm -rf staging/staging
 
+      - name: Debug git state
+        env:
+          STAGING_REPO_TOKEN: ${{ secrets.STAGING_REPO_TOKEN }}
+        run: |
+          cd staging
+          echo "Current branch:"
+          git branch --show-current
+          echo "Remotes before set-url:"
+          git remote -v
+          git remote set-url origin https://x-access-token:${STAGING_REPO_TOKEN}@github.com/superintelligent-se/wininlife-org-dev.git
+          echo "Remotes after set-url:"
+          git remote -v
+          echo "Token present?"
+          if [ -n "$STAGING_REPO_TOKEN" ]; then echo "YES"; else echo "NO"; fi
+
       - name: Commit and push to staging repo
         env:
           STAGING_REPO_TOKEN: ${{ secrets.STAGING_REPO_TOKEN }}
