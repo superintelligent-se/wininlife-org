@@ -22,6 +22,7 @@ jobs:
           ref: main
           token: ${{ secrets.STAGING_REPO_TOKEN }}
           path: staging
+          persist-credentials: false
 
       - name: Copy website files
         run: |
@@ -41,11 +42,12 @@ jobs:
           rm -rf staging/staging
 
       - name: Commit and push to staging repo
+        env:
+          STAGING_REPO_TOKEN: ${{ secrets.STAGING_REPO_TOKEN }}
         run: |
           cd staging
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin https://x-access-token:${{ secrets.STAGING_REPO_TOKEN }}@github.com/superintelligent-se/wininlife-org-dev.git
           git add -A
           git diff --cached --quiet || git commit -m "Deploy dev site from source repo"
-          git push origin HEAD:main
+          git push https://x-access-token:${STAGING_REPO_TOKEN}@github.com/superintelligent-se/wininlife-org-dev.git HEAD:main
