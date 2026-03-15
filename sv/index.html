@@ -27,6 +27,10 @@
     .menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
     .nav-links a { text-decoration: none; color: var(--brand); font-weight: 600; }
     .nav-links a:hover { color: var(--brand-dark); }
+    .nav-links .btn { padding: 9px 14px; font-size: 0.93rem; }
+    .nav-links .btn-primary,
+    .nav-links .btn-secondary { color: inherit; }
+    .nav-links .btn-primary { color: #fff; }
     .language-switch { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); }
     .language-switch .active-language { color: var(--muted); font-weight: 600; }
     .language-switch .separator { color: var(--line); }
@@ -53,13 +57,13 @@
     .kicker { font-size: 0.88rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--brand-dark); font-weight: 700; margin-bottom: 8px; }
     footer { padding: 28px 0 54px; color: var(--muted); font-size: 0.95rem; }
     @media (max-width: 900px) { .hero-grid, .grid-3, .grid-2 { grid-template-columns: 1fr; } .hero { padding-top: 48px; } }
-    @media (max-width: 760px) { .menu-toggle { display: inline-flex; } .nav { padding: 10px 0; } .brand { max-width: min(250px, 66vw); } .nav-links { position: absolute; top: calc(100% + 1px); left: 0; right: 0; padding: 14px 4vw 18px; background: #fff; border-bottom: 1px solid var(--line); display: none; flex-direction: column; align-items: flex-start; gap: 12px; } .nav-links.open { display: flex; } }
+    @media (max-width: 760px) { .menu-toggle { display: inline-flex; } .nav { padding: 10px 0; } .brand { max-width: min(250px, 66vw); } .nav-links { position: absolute; top: calc(100% + 1px); left: 0; right: 0; padding: 14px 4vw 18px; background: #fff; border-bottom: 1px solid var(--line); display: none; flex-direction: column; align-items: flex-start; gap: 12px; } .nav-links.open { display: flex; } .nav-links .btn { width: 100%; text-align: center; } }
   </style>
 </head>
 <body>
   <header>
     <div class="container nav">
-      <a href="#" class="brand" aria-label="Wininlife Foundation hem">
+      <a href="/sv/" class="brand" aria-label="Wininlife Foundation hem">
         <img src="/public/brand/wininlife-logo-horizontal.png" alt="Wininlife Foundation">
       </a>
       <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mainMenu" aria-label="Öppna meny"><span></span><span></span><span></span></button>
@@ -67,25 +71,41 @@
         <a href="#why">Varför vi finns</a>
         <a href="#funding">Finansiering</a>
         <a href="#mission">Mission</a>
+        <a class="btn btn-primary" data-cta-type="BOOK_MEETING">Prata med grundarteamet</a>
+        <a class="btn btn-secondary" data-cta-type="JOIN_COMMUNITY">Utforska skolan</a>
         <div class="language-switch" aria-label="Språkväxlare"><a id="langEn" href="/">EN</a><span class="separator" aria-hidden="true">|</span><span class="active-language" aria-current="page">SV</span></div>
       </nav>
     </div>
   </header>
 
   <main>
-    <section class="hero"><div class="container hero-grid"><div><span class="pill">Alltid kostnadsfritt för unga</span><h1>Färdigheter för livet, gratis och i tid.</h1><p class="lead">Wininlife ger unga tillgång till utbildning i självledarskap, ekonomi, kommunikation, mental styrka, relationer och ansvar — helt utan avgifter, dolda villkor eller framtida betalsteg.</p><div class="cta-row"><a class="btn btn-primary" href="#education">Börja gratis</a><a class="btn btn-secondary" href="#education">Utforska utbildningen</a></div></div><aside class="card" aria-label="Huvudlöfte"><div class="kicker">Vårt löfte</div><ul class="hero-points"><li>Ingen freemium-modell.</li><li>Ingen testperiod som övergår i betalning.</li><li>Ingen senare kostnad för att komma vidare.</li><li>Högkvalitativ utbildning med långsiktigt samhällsfokus.</li></ul></aside></div></section>
+    <section class="hero"><div class="container hero-grid"><div><span class="pill">Alltid kostnadsfritt för unga</span><h1>Färdigheter för livet, gratis och i tid.</h1><p class="lead">Wininlife ger unga tillgång till utbildning i självledarskap, ekonomi, kommunikation, mental styrka, relationer och ansvar — helt utan avgifter, dolda villkor eller framtida betalsteg.</p><div class="cta-row"><a class="btn btn-primary" data-cta-type="JOIN_COMMUNITY">Börja gratis i communityn</a><a class="btn btn-secondary" data-cta-type="BOOK_MEETING">Boka ett samtal</a></div></div><aside class="card" aria-label="Huvudlöfte"><div class="kicker">Vårt löfte</div><ul class="hero-points"><li>Ingen freemium-modell.</li><li>Ingen testperiod som övergår i betalning.</li><li>Ingen senare kostnad för att komma vidare.</li><li>Högkvalitativ utbildning med långsiktigt samhällsfokus.</li></ul></aside></div></section>
     <section id="why"><div class="container"><div class="card subtle"><div class="kicker">Varför detta finns</div><h2>Det många fick lära sig sent och dyrt ska unga kunna få tidigare, strukturerat och gratis.</h2><p class="section-intro">Många vuxna har själva behövt lära sig livets viktigaste färdigheter först när livet redan blivit svårt. Den här stiftelsen finns för att nästa generation ska få tillgång till samma kunskap i tid, med vägledning, kvalitet och bättre stöd.</p></div></div></section>
     <section id="funding"><div class="container"><div class="kicker">Finansiering & möjliggörare</div><h2>Erfarenhet som förs vidare till nästa generation.</h2><p class="section-intro">Plattformen möjliggörs av stiftelsen tillsammans med givare, partners och förebilder som vill ge tillbaka. De investerar i att göra kunskapen tillgänglig för fler unga — professionellt, långsiktigt och alltid kostnadsfritt för deltagaren.</p><div class="grid-3"><article class="card"><h3>Stiftelseburen modell</h3><p>Utbildningen drivs med tydligt samhällsuppdrag, stabil förvaltning och kvalitet över tid.</p></article><article class="card"><h3>Verklig erfarenhet</h3><p>Möjliggörare med egen livserfarenhet bidrar för att kunskap ska nå unga innan problemen växer.</p></article><article class="card"><h3>Generositet med riktning</h3><p>Resurser omsätts i konkret utbildning som stärker individ, familj och samhälle på lång sikt.</p></article></div></div></section>
     <section id="mission"><div class="container"><div class="kicker">Mission</div><h2>Vi bygger inte bara bättre prestation — vi bygger starkare liv.</h2><div class="grid-2"><article class="card"><p>Vår mission är att hjälpa unga att stå stabilt i livet: fatta genomtänkta beslut, hantera ekonomi, kommunicera tydligt, ta ansvar och behålla riktning även under press.</p></article><article class="card"><p>Det är förebyggande, stärkande och framtidsbyggande. Färdigheter som tidigare generationer ofta fick sent ska nu vara tillgängliga tidigare — med kvalitet, struktur och mänsklig värme.</p></article></div></div></section>
-    <section id="education"><div class="container"><div class="card subtle"><h2>Ta nästa steg</h2><p class="section-intro">Oavsett om du är ung deltagare eller vill bidra som möjliggörare är tröskeln noll: utbildningen är alltid kostnadsfri för unga, och stödet går direkt till att fler får tillgång till kunskap i rätt tid.</p><div class="cta-row"><a class="btn btn-primary" href="#">Börja gratis</a><a class="btn btn-secondary" href="#">Alltid kostnadsfritt</a><a class="btn btn-secondary" href="#">Utforska utbildningen</a><a class="btn btn-secondary" href="#">Se hur du kan stötta nästa generation</a></div></div></div></section>
+    <section id="education"><div class="container"><div class="card subtle"><h2>Ta nästa steg</h2><p class="section-intro">Oavsett om du är ung deltagare eller vill bidra som möjliggörare är tröskeln noll: utbildningen är alltid kostnadsfri för unga, och stödet går direkt till att fler får tillgång till kunskap i rätt tid.</p><div class="cta-row"><a class="btn btn-primary" data-cta-type="JOIN_COMMUNITY">Gå med och börja utvecklas</a><a class="btn btn-secondary" data-cta-type="JOIN_COMMUNITY">Se hur upplägget fungerar</a><a class="btn btn-secondary" data-cta-type="BOOK_MEETING">Samarbeta med stiftelseteamet</a></div></div></div></section>
   </main>
 
-  <footer><div class="container">Wininlife Foundation — Färdigheter för livet, gratis och i tid.</div></footer>
+  <footer><div class="container">Wininlife Foundation — Färdigheter för livet, gratis och i tid.<div class="cta-row"><a class="btn btn-primary" data-cta-type="JOIN_COMMUNITY">Utforska communityn</a><a class="btn btn-secondary" data-cta-type="BOOK_MEETING">Kontakta grundarteamet</a></div></div></footer>
 
-  <script>
+  <script type="module">
+    import { CTA_TYPES, getCtaUrl } from '/src/config/cta.js';
+
     const menuToggle = document.getElementById('menuToggle');
     const mainMenu = document.getElementById('mainMenu');
     const langEn = document.getElementById('langEn');
+
+    const ctaTypeMap = {
+      BOOK_MEETING: CTA_TYPES.BOOK_MEETING,
+      JOIN_COMMUNITY: CTA_TYPES.JOIN_COMMUNITY,
+    };
+
+    document.querySelectorAll('[data-cta-type]').forEach((ctaLink) => {
+      const type = ctaTypeMap[ctaLink.dataset.ctaType];
+      ctaLink.href = getCtaUrl(type);
+      ctaLink.target = '_blank';
+      ctaLink.rel = 'noopener noreferrer';
+    });
 
     const currentHash = window.location.hash || '';
     langEn.href = `/${currentHash}`;
