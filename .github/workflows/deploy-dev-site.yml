@@ -24,16 +24,27 @@ jobs:
 
       - name: Copy website files
         run: |
-          rsync -av --delete \
+          rsync -av --delete --delete-excluded \
             --exclude ".git" \
             --exclude ".github" \
+            --exclude "CNAME" \
+            --exclude "staging" \
             ./ staging/
+
+      - name: Set dev custom domain
+        run: |
+          echo "dev.wininlife.org" > staging/CNAME
+
+      - name: Remove accidental nested staging folder
+        run: |
+          rm -rf staging/staging
 
       - name: Commit and push to staging repo
         run: |
           cd staging
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.STAGING_REPO_TOKEN }}@github.com/superintelligent-se/wininlife-org-dev.git
           git add .
           git diff --cached --quiet || git commit -m "Deploy dev site from source repo"
-          git push
+          git push origin main
