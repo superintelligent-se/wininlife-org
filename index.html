@@ -38,6 +38,10 @@
     .menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
     .nav-links a { text-decoration: none; color: var(--brand); font-weight: 600; }
     .nav-links a:hover { color: var(--brand-dark); }
+    .nav-links .btn { padding: 9px 14px; font-size: 0.93rem; }
+    .nav-links .btn-primary,
+    .nav-links .btn-secondary { color: inherit; }
+    .nav-links .btn-primary { color: #fff; }
     .language-switch { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); }
     .language-switch .active-language { color: var(--muted); font-weight: 600; }
     .language-switch .separator { color: var(--line); }
@@ -70,13 +74,14 @@
       .brand { max-width: min(250px, 66vw); }
       .nav-links { position: absolute; top: calc(100% + 1px); left: 0; right: 0; padding: 14px 4vw 18px; background: #fff; border-bottom: 1px solid var(--line); display: none; flex-direction: column; align-items: flex-start; gap: 12px; }
       .nav-links.open { display: flex; }
+      .nav-links .btn { width: 100%; text-align: center; }
     }
   </style>
 </head>
 <body>
   <header>
     <div class="container nav">
-      <a href="#" class="brand" aria-label="Wininlife Foundation home">
+      <a href="/" class="brand" aria-label="Wininlife Foundation home">
         <img src="/public/brand/wininlife-logo-horizontal.png" alt="Wininlife Foundation">
       </a>
       <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mainMenu" aria-label="Open menu">
@@ -86,6 +91,8 @@
         <a href="#why">Why we exist</a>
         <a href="#funding">Funding</a>
         <a href="#mission">Mission</a>
+        <a class="btn btn-primary" data-cta-type="BOOK_MEETING">Talk with the founding team</a>
+        <a class="btn btn-secondary" data-cta-type="JOIN_COMMUNITY">Explore the school</a>
         <div class="language-switch" aria-label="Language switcher">
           <span class="active-language" aria-current="page">EN</span>
           <span class="separator" aria-hidden="true">|</span>
@@ -103,8 +110,8 @@
           <h1>Life skills, free and on time.</h1>
           <p class="lead">Wininlife gives young people access to education in self-leadership, finance, communication, mental resilience, relationships and responsibility — with no fees, no hidden terms, and no future payment steps.</p>
           <div class="cta-row">
-            <a class="btn btn-primary" href="#education">Start for free</a>
-            <a class="btn btn-secondary" href="#education">Explore the education</a>
+            <a class="btn btn-primary" data-cta-type="JOIN_COMMUNITY">Start free in the community</a>
+            <a class="btn btn-secondary" data-cta-type="BOOK_MEETING">Book a conversation</a>
           </div>
         </div>
         <aside class="card" aria-label="Main promise">
@@ -125,15 +132,29 @@
 
     <section id="mission"><div class="container"><div class="kicker">Mission</div><h2>We are not only building better performance — we are building stronger lives.</h2><div class="grid-2"><article class="card"><p>Our mission is to help young people stand stable in life: make thoughtful decisions, manage money, communicate clearly, take responsibility and keep direction under pressure.</p></article><article class="card"><p>This is preventive, empowering and future-building. Skills that previous generations often received too late should now be available earlier — with quality, structure and human warmth.</p></article></div></div></section>
 
-    <section id="education"><div class="container"><div class="card subtle"><h2>Take the next step</h2><p class="section-intro">Whether you are a young participant or want to contribute as an enabler, the threshold is zero: education is always free for young people, and support goes directly to giving more people access to knowledge at the right time.</p><div class="cta-row"><a class="btn btn-primary" href="#">Start for free</a><a class="btn btn-secondary" href="#">Always free</a><a class="btn btn-secondary" href="#">Explore the education</a><a class="btn btn-secondary" href="#">See how you can support the next generation</a></div></div></div></section>
+    <section id="education"><div class="container"><div class="card subtle"><h2>Take the next step</h2><p class="section-intro">Whether you are a young participant or want to contribute as an enabler, the threshold is zero: education is always free for young people, and support goes directly to giving more people access to knowledge at the right time.</p><div class="cta-row"><a class="btn btn-primary" data-cta-type="JOIN_COMMUNITY">Join and start learning</a><a class="btn btn-secondary" data-cta-type="JOIN_COMMUNITY">See how the program works</a><a class="btn btn-secondary" data-cta-type="BOOK_MEETING">Partner with the foundation team</a></div></div></div></section>
   </main>
 
-  <footer><div class="container">Wininlife Foundation — Life skills, free and on time.</div></footer>
+  <footer><div class="container">Wininlife Foundation — Life skills, free and on time.<div class="cta-row"><a class="btn btn-primary" data-cta-type="JOIN_COMMUNITY">Explore the community</a><a class="btn btn-secondary" data-cta-type="BOOK_MEETING">Contact the founding team</a></div></div></footer>
 
-  <script>
+  <script type="module">
+    import { CTA_TYPES, getCtaUrl } from '/src/config/cta.js';
+
     const menuToggle = document.getElementById('menuToggle');
     const mainMenu = document.getElementById('mainMenu');
     const langSv = document.getElementById('langSv');
+
+    const ctaTypeMap = {
+      BOOK_MEETING: CTA_TYPES.BOOK_MEETING,
+      JOIN_COMMUNITY: CTA_TYPES.JOIN_COMMUNITY,
+    };
+
+    document.querySelectorAll('[data-cta-type]').forEach((ctaLink) => {
+      const type = ctaTypeMap[ctaLink.dataset.ctaType];
+      ctaLink.href = getCtaUrl(type);
+      ctaLink.target = '_blank';
+      ctaLink.rel = 'noopener noreferrer';
+    });
 
     const currentHash = window.location.hash || '';
     langSv.href = `/sv/${currentHash}`;
